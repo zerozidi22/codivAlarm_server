@@ -8,6 +8,8 @@ group = 'com.happyWatter'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+apply plugin: 'io.spring.dependency-management'
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -23,6 +25,21 @@ jar {
 			it.isDirectory() ? it : zipTree(it)
 		}
 	}
+}
+
+bootJar {
+	baseName = 'codiv'
+	version =  '0.0.1'
+}
+
+tasks.jar {
+	enabled = true
+}
+
+tasks.bootJar {
+	enabled = true
+	archiveClassifier.set("boot")
+	mainClassName = "com.happyWatter.codivAlarm.CodivAlarmApplication"
 }
 
 
