@@ -48,12 +48,15 @@ public class SendService {
             List<User> user = tokenService.selectTokens();
 
             List<String> tokens = new ArrayList<>();
-            for(User data : user){
-                tokens.add(data.getToken());
-            }
+//            for(User data : user){
+//                tokens.add(data.getToken());
+//            }
 
             JSONArray token = new JSONArray();
-            token.put(tokens.get(0));
+            for(User data : user){
+                token.put(data.getToken());
+            }
+//            token.put(tokens);
 
             container.put("data", messageData);
 

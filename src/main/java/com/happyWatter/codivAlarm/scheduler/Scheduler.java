@@ -5,6 +5,7 @@ import com.happyWatter.codivAlarm.service.ApiService;
 import com.happyWatter.codivAlarm.service.DataService;
 import com.happyWatter.codivAlarm.service.SendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ public class Scheduler {
 
     //데이터 수집
 //    @Scheduled(cron = "0 * 9 * * ?")
-//    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "*/30 * * * * ?")
     public void cronJobForDataCallFromApiServcer() throws Exception {
 
         List<ApiCodivData> data = apiService.getCodivDataFromServer();
@@ -34,7 +35,7 @@ public class Scheduler {
 
     //데이터 수집
 //    @Scheduled(cron = "0 0 10 * * ?")
-//    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "*/30 * * * * ?")
     public void cronJobForSendToFcm() throws Exception {
 
         Long decideCnt = apiService.getCodivDate();
