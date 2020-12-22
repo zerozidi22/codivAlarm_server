@@ -1,5 +1,5 @@
 server:
-  address: 34.123.72.51
+  address: 0.0.0.0
   port: 9080
 spring:
   datasource:
