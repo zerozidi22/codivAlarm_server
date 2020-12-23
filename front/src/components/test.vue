@@ -46,13 +46,7 @@ export default {
   },
   methods: {
     getData(){
-
-      if(this.test1 == "" || this.test2 == ""){
-        alert("input box를 채워주세요");
-        return ;
-      }
-
-      this.$axios.get('http://35.202.26.74:9080/api/data').then(response => {
+          this.$axios.get('/api/data').then(response => {
           this.result = response.data
 
           if(this.result.decideGapCnt > 1000){
