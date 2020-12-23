@@ -17,13 +17,16 @@ public class TokenService {
 
     public void createToken(String token){
 
-        User user = new User();
-        user.setToken(token);
-        user.setCreateDt(LocalDateTime.now());
-        user.setUpdateDt(LocalDateTime.now());
+        List<User> rst = userRepository.findByToken(token);
 
-        userRepository.save(user);
+        if(rst == null){
+            User user = new User();
+            user.setToken(token);
+            user.setCreateDt(LocalDateTime.now());
+            user.setUpdateDt(LocalDateTime.now());
 
+            userRepository.save(user);
+        }
 
     }
 

@@ -23,4 +23,7 @@ public class ApiCodivData {
     @Column(nullable = false, columnDefinition = "BIGINT")
     public Long decideCnt;
 
+    @Column(nullable = true, columnDefinition = "BIGINT")
+    public Long decideGapCnt;
+
 }

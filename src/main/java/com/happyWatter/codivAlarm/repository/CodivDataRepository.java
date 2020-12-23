@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CodivDataRepository extends JpaRepository<ApiCodivData, Long> {
 
 
-    public ApiCodivData findByCreateDt(String createDt);
+    ApiCodivData findByCreateDt(String createDt);
 
 }

@@ -32,7 +32,7 @@ public class ApiService {
         StringBuilder urlBuilder = new StringBuilder("http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"); /*URL*/
         urlBuilder.append("?" + "ServiceKey=" + ServiceKey); /*Service Key*/
         urlBuilder.append("&" + "pageNo=" + "1");
-        urlBuilder.append("&" + "numOfRows=" + "2");
+        urlBuilder.append("&" + "numOfRows=" + "10");
         urlBuilder.append("&" + "startCreateDt=" + yestYestDate);
         urlBuilder.append("&" + "endCreateDt=" + yestDate);
 
