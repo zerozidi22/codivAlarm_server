@@ -27,7 +27,7 @@ public class Scheduler {
 
     //데이터 수집
 //    @Scheduled(cron = "0 * 9 * * ?")
-    @Scheduled(cron = "0 */1 22 * * ?")
+    @Scheduled(cron = "0 */1 09 * * ?")
     public void cronJobForDataCallFromApiServcer() throws Exception {
         System.out.println("data" + LocalDateTime.now());
         List<ApiCodivData> data = apiService.getCodivDataFromServer();
@@ -38,7 +38,7 @@ public class Scheduler {
 
     //푸시 발송
 //    @Scheduled(cron = "0 0 10 * * ?")
-    @Scheduled(cron = "0 0 23 * * ?")
+    @Scheduled(cron = "0 0 11 * * ?")
     public void cronJobForSendToFcm() throws Exception {
         System.out.println("fcm" + LocalDateTime.now());
         Long decideCnt = apiService.getCodivDate();
