@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,7 +27,11 @@ public class DataService {
     }
 
     public ApiCodivData getData(){
-       return codivDataRepository.findByCreateDt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+
+        List<String> condition = new ArrayList<>();
+        condition.add(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        condition.add(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+       return codivDataRepository.findByCreateDtInOrderByCreateDtDesc(condition).get(0);
     }
 
 
