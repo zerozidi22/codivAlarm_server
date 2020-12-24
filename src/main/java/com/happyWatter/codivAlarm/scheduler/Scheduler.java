@@ -27,13 +27,18 @@ public class Scheduler {
 
     //데이터 수집
 //    @Scheduled(cron = "0 * 9 * * ?")
-    @Scheduled(cron = "0 */1 09 * * ?")
+//    @Scheduled(cron = "0 */1 09 * * ?")
+    @Bean
     public void cronJobForDataCallFromApiServcer() throws Exception {
-        System.out.println("data" + LocalDateTime.now());
         List<ApiCodivData> data = apiService.getCodivDataFromServer();
-        Long gapCnt = data.get(0).getDecideCnt() - data.get(1).getDecideCnt();
-        dataService.saveData(data, gapCnt);
+        ApiCodivData rst = dataService.saveData(data);
 
+        if(rst != null){
+            ApiCodivData today =  dataService.getDataByCreateDt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+            ApiCodivData yesterDay =  dataService.getDataByCreateDt(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+
+            dataService.updateCreateDt(today.getDecideCnt() - yesterDay.getDecideCnt());
+        }
     }
 
     //푸시 발송

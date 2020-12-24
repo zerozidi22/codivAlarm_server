@@ -16,14 +16,14 @@ public class DataService {
     @Autowired
     public CodivDataRepository codivDataRepository;
 
-    public void saveData(List<ApiCodivData> data, Long gapCnt) {
+    public ApiCodivData saveData(List<ApiCodivData> data) {
         for(ApiCodivData dt : data){
             ApiCodivData rstDt = codivDataRepository.findByCreateDt(dt.getCreateDt());
             if(rstDt == null){
-                dt.setDecideGapCnt(gapCnt);
-                codivDataRepository.save(dt);
+                return codivDataRepository.save(dt);
             }
         }
+        return null;
     }
 
     public ApiCodivData getData(){
@@ -32,6 +32,18 @@ public class DataService {
         condition.add(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
         condition.add(LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd")));
        return codivDataRepository.findByCreateDtInOrderByCreateDtDesc(condition).get(0);
+    }
+
+    public ApiCodivData getDataByCreateDt(String date){
+        return codivDataRepository.findByCreateDt(date);
+    }
+
+    public void updateCreateDt(Long gap){
+        ApiCodivData dt = codivDataRepository.findByCreateDt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        dt.setDecideGapCnt(gap);
+
+        codivDataRepository.save(dt);
+
     }
 
 

@@ -47,6 +47,7 @@ export default {
   methods: {
     getData(){
           this.$axios.get('/api/data').then(response => {
+
           this.result = response.data
 
           if(this.result.decideGapCnt > 1000){

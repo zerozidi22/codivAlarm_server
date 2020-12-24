@@ -11,5 +11,4 @@ public interface CodivDataRepository extends JpaRepository<ApiCodivData, Long> {
 
 
     List<ApiCodivData> findByCreateDtInOrderByCreateDtDesc(List<String> createDt);
-
 }
