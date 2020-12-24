@@ -26,9 +26,7 @@ public class Scheduler {
     private DataService dataService;
 
     //데이터 수집
-//    @Scheduled(cron = "0 * 9 * * ?")
-//    @Scheduled(cron = "0 */1 09 * * ?")
-    @Bean
+    @Scheduled(cron = "0 */1 09 * * ?")
     public void cronJobForDataCallFromApiServcer() throws Exception {
         List<ApiCodivData> data = apiService.getCodivDataFromServer();
         ApiCodivData rst = dataService.saveData(data);
