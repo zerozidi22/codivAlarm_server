@@ -43,7 +43,8 @@ public class Scheduler {
 //    @Scheduled(cron = " 0 0 10 * * *")
     @Scheduled(cron = " 0 0 10 * * *")
     public void cronJobForSendToFcm() throws Exception {
-        ApiCodivData apiCodivData = apiService.getCodivDate();
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        ApiCodivData apiCodivData = apiService.getCodivDate(now);
 
         String title = "오늘의 확진자( " + apiCodivData.getCreateDt() +  "일 기준)";
         String body =  apiCodivData.getDecideGapCnt() + "명 입니다.";
