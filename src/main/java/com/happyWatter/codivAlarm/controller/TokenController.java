@@ -33,10 +33,25 @@ public class TokenController {
         tokenService.createToken(token.getToken());
 
 
-        ApiCodivData apiCodivData = apiService.getCodivDate();
 
-        String title = "오늘의 확진자( " + apiCodivData.getCreateDt() +  "일 기준)";
-        String body =  apiCodivData.getDecideGapCnt() + "명 입니다.";
+
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String yest = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        ApiCodivData apiCodivData = apiService.getCodivDate(now);
+
+        String title = "";
+        String body = "";
+        if(apiCodivData != null) {
+
+            title = "오늘의 확진자( " + apiCodivData.getCreateDt() + "일 기준)";
+            body = apiCodivData.getDecideGapCnt() + "명 입니다.";
+
+        } else {
+            apiCodivData = apiService.getCodivDate(yest);
+            title = "오늘의 확진자( " + apiCodivData.getCreateDt() + "일 기준)";
+            body = apiCodivData.getDecideGapCnt() + "명 입니다.";
+
+        }
         sendService.sendToFcmToOnePerson(title, body, token.getToken());
 
     }

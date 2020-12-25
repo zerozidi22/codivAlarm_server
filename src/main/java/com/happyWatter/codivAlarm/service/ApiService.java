@@ -75,10 +75,9 @@ public class ApiService {
 
     }
 
-    public ApiCodivData getCodivDate(){
-        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+    public ApiCodivData getCodivDate(String date){
 
-        ApiCodivData nowData =  codivDataRepository.findByCreateDt(now);
+        ApiCodivData nowData =  codivDataRepository.findByCreateDt(date);
 
         return nowData;
 
