@@ -16,9 +16,9 @@ public class TokenService {
     public UserRepository userRepository;
 
     public void createToken(String token){
-
+        System.out.println("token" + token);
         List<User> rst = userRepository.findByToken(token);
-
+        System.out.println(rst.get(0).getCreateDt());
         if(rst == null){
             User user = new User();
             user.setToken(token);
