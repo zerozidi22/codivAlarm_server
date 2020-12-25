@@ -20,3 +20,9 @@ spring:
     generate-ddl: true
     show-sql: true
     open-in-view: false
+
+
+
+happyWater :
+  apiServerKey: 5JvFLv3oF5idcPNnPGNAsvl6d%2B8JEsE7FPweOD3NA55%2B3M8RuO9dJpBhQTVzIcWxUGhXv4h1kVDgd3D%2F%2BFaqcA%3D%3D
+  fireBaseServerKey: AAAA-6u3rBw:APA91bHrAKqXaXMxiX8ZRHLlLr1RNGPaz2W7-LAX1BCEvwcd_701ijfl4DRi4qchxg_js1RbVHffuD3DwI8Q2XiZ5a5eUMXqMXVzV3Mpus8B3pEhi0gZkdUqxGPc_ZtsxT9_Tb-VtCT9

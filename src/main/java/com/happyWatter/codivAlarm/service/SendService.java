@@ -5,6 +5,7 @@ import com.happyWatter.codivAlarm.entity.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -19,9 +20,11 @@ public class SendService {
     @Autowired
     public TokenService tokenService;
 
+    @Value("${happyWater.fireBaseServerKey}")
+    public String key;
+
     public void sendToFcm(String title, String body) {
 
-        String key = "AAAA-6u3rBw:APA91bHrAKqXaXMxiX8ZRHLlLr1RNGPaz2W7-LAX1BCEvwcd_701ijfl4DRi4qchxg_js1RbVHffuD3DwI8Q2XiZ5a5eUMXqMXVzV3Mpus8B3pEhi0gZkdUqxGPc_ZtsxT9_Tb-VtCT9";
 
         try {
 
@@ -118,6 +121,62 @@ public class SendService {
                 e.getStackTrace();
             }
         }
+    }
+
+
+    public void sendToFcmToOnePerson(String title, String body, String token_from) {
+
+        try {
+
+            // fcm에 보내는 로직
+            URL url = new URL("https://fcm.googleapis.com/fcm/send");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Authorization", "key=" + key);
+            connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+            connection.setRequestMethod("POST");
+            connection.setConnectTimeout(10000);
+
+            connection.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
+
+            // 1. 메시지 데이터 담을 곳 부터 만들기
+            JSONObject container = new JSONObject();
+            JSONObject messageData = new JSONObject();
+            JSONObject registration_ids = new JSONObject();
+
+            // 1.1 메시지 데이터 만들기
+            messageData.put("title", title);
+            messageData.put("body", body);
+
+            List<User> user = tokenService.selectTokens();
+
+            List<String> tokens = new ArrayList<>();
+
+            JSONArray token = new JSONArray();
+
+            token.put(token_from);
+
+            container.put("data", messageData);
+
+            container.put("registration_ids", token);
+
+
+
+            wr.write(container.toString().getBytes("UTF-8"));
+
+            wr.flush();
+            wr.close();
+
+            connection.connect();
+            connection.getResponseCode();
+            String responseBody = null;
+            responseBody = getAndClose(connection.getInputStream());
+            connection.disconnect();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 

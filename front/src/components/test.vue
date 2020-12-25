@@ -15,6 +15,7 @@
 
       <h3 style="margin-top: 3%;" class="g">
         <div style="font-size:13px"> 누적 : {{result.decideCnt | comma}} </div>
+        <div style="font-size:13px"> (from. www.data.go.kr) </div>
       </h3>
       
       <lottie-player src="https://assets3.lottiefiles.com/packages/lf20_jvybumrx.json"  background="transparent"  speed="1"  style="margin-left:auto; margin-right:auto; width: 220px; height: 220px;"  loop autoplay></lottie-player>

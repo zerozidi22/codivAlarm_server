@@ -5,7 +5,6 @@ import com.happyWatter.codivAlarm.service.ApiService;
 import com.happyWatter.codivAlarm.service.DataService;
 import com.happyWatter.codivAlarm.service.SendService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +25,8 @@ public class Scheduler {
     private DataService dataService;
 
     //데이터 수집
-    @Scheduled(cron = "0 */1 09 * * ?")
+//    @Scheduled(cron = " 0 * 9 * * *")
+    @Scheduled(cron = " 0 * 9 * * *")
     public void cronJobForDataCallFromApiServcer() throws Exception {
         List<ApiCodivData> data = apiService.getCodivDataFromServer();
         ApiCodivData rst = dataService.saveData(data);
@@ -40,14 +40,13 @@ public class Scheduler {
     }
 
     //푸시 발송
-//    @Scheduled(cron = "0 0 10 * * ?")
-    @Scheduled(cron = "0 0 11 * * ?")
+//    @Scheduled(cron = " 0 0 10 * * *")
+    @Scheduled(cron = " 0 0 10 * * *")
     public void cronJobForSendToFcm() throws Exception {
-        System.out.println("fcm" + LocalDateTime.now());
-        Long decideCnt = apiService.getCodivDate();
+        ApiCodivData apiCodivData = apiService.getCodivDate();
 
-        String title = "오늘의 확진자( " + LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyy.MM.dd")) +  "일 기준)";
-        String body =  decideCnt + "명 입니다.";
+        String title = "오늘의 확진자( " + apiCodivData.getCreateDt() +  "일 기준)";
+        String body =  apiCodivData.getDecideGapCnt() + "명 입니다.";
         sendService.sendToFcm(title, body);
 
     }

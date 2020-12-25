@@ -3,6 +3,7 @@ package com.happyWatter.codivAlarm.service;
 import com.happyWatter.codivAlarm.entity.ApiCodivData;
 import com.happyWatter.codivAlarm.repository.CodivDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -22,9 +23,11 @@ public class ApiService {
     @Autowired
     public CodivDataRepository codivDataRepository;
 
+    @Value("${happyWater.apiServerKey}")
+    public String ServiceKey;
+
     public List<ApiCodivData> getCodivDataFromServer() throws Exception {
 
-        String ServiceKey = "5JvFLv3oF5idcPNnPGNAsvl6d%2B8JEsE7FPweOD3NA55%2B3M8RuO9dJpBhQTVzIcWxUGhXv4h1kVDgd3D%2F%2BFaqcA%3D%3D";
 
         String yestDate = LocalDateTime.now().minusDays(0).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String yestYestDate = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -72,14 +75,12 @@ public class ApiService {
 
     }
 
-    public Long getCodivDate(){
+    public ApiCodivData getCodivDate(){
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String yest = LocalDateTime.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         ApiCodivData nowData =  codivDataRepository.findByCreateDt(now);
-        ApiCodivData yestData =  codivDataRepository.findByCreateDt(yest);
 
-        return nowData.getDecideCnt() - yestData.getDecideCnt();
+        return nowData;
 
 
     }
