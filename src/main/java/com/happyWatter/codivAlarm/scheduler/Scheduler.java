@@ -26,7 +26,7 @@ public class Scheduler {
 
     //데이터 수집
 //    @Scheduled(cron = " 0 * 9 * * *")
-    @Scheduled(cron = " 0 * 9 * * *")
+    @Scheduled(cron = " 0 * 14 * * *")
     public void cronJobForDataCallFromApiServcer() throws Exception {
         List<ApiCodivData> data = apiService.getCodivDataFromServer();
         ApiCodivData rst = dataService.saveData(data);
@@ -41,7 +41,7 @@ public class Scheduler {
 
     //푸시 발송
 //    @Scheduled(cron = " 0 0 10 * * *")
-    @Scheduled(cron = " 0 0 10 * * *")
+    @Scheduled(cron = " 0 0 15 * * *")
     public void cronJobForSendToFcm() throws Exception {
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         ApiCodivData apiCodivData = apiService.getCodivDate(now);
